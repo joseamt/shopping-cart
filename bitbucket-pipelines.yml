@@ -1,5 +1,5 @@
 # This is a sample build configuration for JavaScript.
-image: node:8.0.
+image: node:8.0.0
 clone:
   depth: full
 pipelines:
