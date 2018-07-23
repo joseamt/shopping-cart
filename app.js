@@ -13,6 +13,7 @@ var validator = require('express-validator');
 
 
 var indexRouter = require('./routes/index');
+var userRoutes = require('./routes/user');
 var app = express();
 let option = {useNewUrlParser: true};
 mongoose.connect('mongodb://localhost:27017/shopping', option);
@@ -46,7 +47,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/user', userRoutes);
 app.use('/', indexRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
