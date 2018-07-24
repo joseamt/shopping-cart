@@ -6,6 +6,7 @@ var logger = require('morgan');
 var expressHbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var flash = require('connect-flash');
 var validator = require('express-validator');
@@ -16,8 +17,9 @@ var indexRouter = require('./routes/index');
 var userRoutes = require('./routes/user');
 var app = express();
 let option = {useNewUrlParser: true};
-let mongoUri = 'mongodb://heroku_90dcq5c7:jose123@ds145951.mlab.com:45951/heroku_90dcq5c7'
-    || 'mongodb://localhost:27017/shopping';
+/*let mongoUri = 'mongodb://heroku_90dcq5c7:jose123@ds145951.mlab.com:45951/heroku_90dcq5c7'
+    || 'mongodb://localhost:27017/shopping';*/
+let mongoUri = 'mongodb://localhost:27017/shopping';
 mongoose.connect(mongoUri, option);
 mongoose.connection.on('connected', function () {
     console.log('MOngodb connection opened');
@@ -43,12 +45,24 @@ app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(validator());
 app.use(cookieParser());
-app.use(session({secret: 'mysupersecret', resave: false, saveUninitialized: false}));
+app.use(session(
+    {
+        secret: 'mysupersecret',
+        resave: false,
+        saveUninitialized: false,
+        store: new MongoStore({mongooseConnection: mongoose.connection}),
+        cookie: {maxAge: 180 * 60 * 1000}
+    }
+));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.use(function (req, res, next) {
+    res.locals.login = req.isAuthenticated();
+    res.locals.session = req.session;
+    next();
+});
 app.use('/user', userRoutes);
 app.use('/', indexRouter);
 
