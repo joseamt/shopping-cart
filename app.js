@@ -17,10 +17,10 @@ var indexRouter = require('./routes/index');
 var userRoutes = require('./routes/user');
 var app = express();
 let option = {useNewUrlParser: true};
-let mongoUri = 'mongodb://shopping:shopping123@ds145951.mlab.com:45951/heroku_90dcq5c7';
+let mongoUri = 'mongodb://shopping:shopping123@ds145951.mlab.com:45951/heroku_90dcq5c7' ||
+    'mongodb://localhost:27017/shopping';
 
-//let mongoUri = 'mongodb://localhost:27017/shopping';
-mongoose.connect('mongodb://shopping:shopping123@ds145951.mlab.com:45951/heroku_90dcq5c7', option);
+mongoose.connect(mongoUri, option);
 mongoose.connection.on('connected', function () {
     console.log('MOngodb connection opened');
 });
