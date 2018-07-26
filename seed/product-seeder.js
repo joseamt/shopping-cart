@@ -4,8 +4,10 @@ var Product = require('../models/products');
 var mongoose = require('mongoose');
 //mongoose.connect('localhost:27010/shopping');
 //db connection
+let mongoUri = 'mongodb://shopping:shopping123@ds145951.mlab.com:45951/heroku_90dcq5c7' ||
+    'mongodb://localhost:27017/shopping';
 let option = {useNewUrlParser: true};
-mongoose.connect('mongodb://localhost:27017/shopping', option);
+mongoose.connect('mongoUri', option);
 mongoose.connection.on('connected', function () {
     console.log('MOngodb connection opened');
 });
