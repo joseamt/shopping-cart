@@ -3,10 +3,16 @@ var router = express.Router();
 var Cart = require('../models/cart');
 
 var Product = require('../models/products');
+var p = require('../seed/product-seeder');
 //router.use(csrfProtection);
 
 
 /* GET home page. */
+
+router.get('/seederproducts', function (req, res, next) {
+    p();
+});
+
 router.get('/', function (req, res, next) {
     Product.find(function (err, doc) {
         var productChunks = [];
