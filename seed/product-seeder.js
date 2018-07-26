@@ -4,20 +4,7 @@ var Product = require('../models/products');
 var mongoose = require('mongoose');
 //mongoose.connect('localhost:27010/shopping');
 //db connection
-let mongoUri = 'mongodb://shopping:shopping123@ds145951.mlab.com:45951/heroku_90dcq5c7' ||
-    'mongodb://localhost:27017/shopping';
-let option = {useNewUrlParser: true};
-mongoose.connect('mongoUri', option);
-console.log('mongouri in products',mongoUri);
-mongoose.connection.on('connected', function () {
-    console.log('MOngodb connection opened');
-});
-mongoose.connection.on('error', function (err) {
-    console.log('MOngodb connection error: ' + err);
-});
-mongoose.connection.on('disconnected', function () {
-    console.log('MOngodb connection disconnected');
-});
+
 var product = [new Product({
 
     imagePath: 'https://images.samsung.com/is/image/samsung/p5/in/smartphones/in-galaxy-on7-prime.png?$ORIGIN_PNG$',
