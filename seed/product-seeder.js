@@ -8,6 +8,7 @@ let mongoUri = 'mongodb://shopping:shopping123@ds145951.mlab.com:45951/heroku_90
     'mongodb://localhost:27017/shopping';
 let option = {useNewUrlParser: true};
 mongoose.connect('mongoUri', option);
+console.log('mongouri in products',mongoUri);
 mongoose.connection.on('connected', function () {
     console.log('MOngodb connection opened');
 });
